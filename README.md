@@ -1,5 +1,5 @@
 # Introduction 
-**本人学习Netty后决定自己写1个基于Netty、Zookeeper、Spring的轻量级RPC框架，收获颇丰，不过本人才疏学浅，难免有所疏漏，若有批评和建议请发到邮箱1035090753@qq.com**
+**本人学习Netty后决定自己写1个基于Netty、Zookeeper、Spring的轻量级RPC框架，收获颇丰，不过本人才疏学浅，难免有所疏漏，若有批评和建议请发到邮箱2921366586@qq.com**
 
 
 # Features
@@ -16,44 +16,54 @@
 
 # Quick Start
 ### 服务端开发
-- **在服务端的Service下添加你自己的Service,并加上@Service注解**
+- **在服务端user的Service下添加你自己的Service,并加上@Service注解**
 	<pre>
 	@Service
-	public class TestService {
-		public void test(User user){
-			System.out.println("调用了TestService.test");
-		}
+	public class UserService {
+	    public void save(User user) {
+	
+	    }
+	    public void saveList(List<User> users) {
+	
+	    }
 	}
 	</pre>
 
 - **生成1个服务接口并生成1个实现该接口的类**
 	###### 接口如下
 	<pre>
-	public interface TestRemote {
-		public Response testUser(User user);  
+	public interface UserRemote {
+	    public Response saveUser(User user);
+	    public Response saveUsers(List<User> users);
 	}
 	</pre>
 	###### 实现类如下，为你的实现类添加@Remote注解，该类是你真正调用服务的地方，你可以生成自己想返回给客户端的任何形式的Response
 
 	<pre> 
 	@Remote
-	public class TestRemoteImpl implements TestRemote{
-		@Resource
-		private TestService service;
-		public Response testUser(User user){
-			service.test(user);
-			Response response = ResponseUtil.createSuccessResponse(user);
-			return response;
-		}
-	}	
+	public class UserRemoteImpl implements UserRemote{
+	    @Resource
+	    private UserService userService;
+	
+	    public Response saveUser(User user) {
+	        userService.save(user);
+	        return ResponseUtil.createSuccesssResult(user);
+	    }
+	
+	    public Response saveUsers(List<User> users) {
+	        userService.saveList(users);
+	        return ResponseUtil.createSuccesssResult(users);
+	    }
+	}
 	</pre>
 
 
 ### 客户端开发
 - **在客户端生成一个接口，该接口为你要调用的接口**
 	<pre>
-	public interface TestRemote {
-		public Response testUser(User user);
+	public interface UserRemote {
+	    public Response saveUser(User user);
+	    public Response saveUsers(List<User> users);
 	}
 	</pre>
 
@@ -65,14 +75,14 @@
 	@ComponentScan("\\")
 	public class RemoteInvokeTest {
 		@RemoteInvoke
-		public static TestRemote userremote;
+		public static UserRemote userRemote;
 		public static User user;
 		@Test
 		public void testSaveUser(){
-			User user = new User();
+			user = new User();
 			user.setId(1000);
 			user.setName("张三");
-			userremote.testUser(user);
+			userRemote.testUser(user);
 		}
 	}	
 	</pre>
