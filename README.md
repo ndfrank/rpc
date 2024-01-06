@@ -16,7 +16,7 @@
 
 # Quick Start
 ### 服务端开发
-- **在服务端user的Service下添加你自己的Service,并加上@Service注解**
+- **在服务端的Service下添加你自己的Service,并加上@Service注解**
 	<pre>
 	@Service
 	public class UserService {
