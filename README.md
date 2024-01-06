@@ -21,10 +21,10 @@
 	@Service
 	public class UserService {
 	    public void save(User user) {
-	
+	        System.out.println("调用了UserService.save");
 	    }
 	    public void saveList(List<User> users) {
-	
+	        System.out.println("调用了UserService.saveList");
 	    }
 	}
 	</pre>
@@ -82,20 +82,23 @@
 			user = new User();
 			user.setId(1000);
 			user.setName("张三");
-			userRemote.testUser(user);
+			userRemote.saveUser(user);
 		}
 	}	
 	</pre>
 
 ### 结果
 - **一万次调用结果**
-![Markdown](https://s1.ax1x.com/2018/07/06/PZMMBF.png)
+![image](https://github.com/ndfrank/rpc/assets/102965015/4b22ad62-8a2b-41ab-bbbd-2154edb14f9d)
+
 
 - **十万次调用结果**
-![Markdown](https://s1.ax1x.com/2018/07/06/PZM3N9.png)
+![image](https://github.com/ndfrank/rpc/assets/102965015/746b7fb7-e244-447b-95c6-e80dfd58d332)
+
 
 - **一百万次调用结果**
-![Markdown](https://s1.ax1x.com/2018/07/06/PZMY1x.png)
+![image](https://github.com/ndfrank/rpc/assets/102965015/fcde6119-2887-4be0-872f-531bbd18531e)
+
 
 
 
